@@ -1,0 +1,402 @@
+/*
+Programmer: Michael Richardson
+Program Purpse: Final Exam Menu
+Program Creation Date: 12/8/2013
+*/
+
+#include <iostream>
+#include <iomanip>
+#include <fstream>
+#include <string>
+#include <cctype>
+#include <ctime>
+#include <cstdlib>
+#include "Employee.h"
+
+using namespace std;
+
+void Math();
+void FileProccessing();
+void EmployeeClass();
+void Menu();
+void Test_Grades( string[], int, double[], int, double[], int, double[], int, double[], int, double[], int);
+void Student_Grade( double [], int, char[], int);
+void TEST();
+
+
+int main()
+{
+Menu();
+}
+
+void Menu()
+{
+
+char Quit = 'n';
+int choice = 0;
+const int ONE = 1;
+
+do
+    {
+     system("CLS");
+
+     cout << "  =======================\n"
+     << "  |  Final Exam Menu    |\n"
+     << "  =======================\n"
+     << "  | 1. Math Tutor       |\n"
+     << "  | 2. File Proccessing |\n"
+     << "  | 3. Grade Book       |\n"
+     << "  | 4. Employee Class   |\n"
+     << "  | 5. Quit the Program |\n"
+     << "  =======================\n\n"
+     << "Enter your choice: ";
+     cin>> choice;
+
+     while (choice < 1 || choice > 5)
+     {
+         cout<<"Please enter a valid menu choice (1-5): ";
+         cin>>choice;
+     }
+
+            switch (choice)
+            {
+                case ONE:
+                     Math();
+                     break;
+                case 2:
+                     FileProccessing();
+                     break;
+                case 3:
+                     TEST();
+                     break;
+                case 4:
+                     EmployeeClass();
+                     break;
+                case 5:
+                    {cout<<"Are you sure you want to quit? (Y/N): ";
+                    cin>>Quit;}
+
+            }
+      Quit = toupper(Quit);
+
+     }while (Quit != 'Y');
+}
+
+
+void Math()
+{
+    int numOne, numTwo, numAnswer, userNum;
+    char Again;
+do
+{
+    system("CLS");
+    unsigned seed = time(0);
+    srand(seed);
+
+    numOne = 1 + rand() % 300;
+    numTwo = 1 + rand() % 300;
+
+    if (numOne > numTwo)
+    {
+    numAnswer = numOne - numTwo;
+    cout << "   !Math Tutor!" << endl;
+    cout << "\n      " << setw(5) << numOne << endl;
+    cout << "     -"<< setw(5) << numTwo << endl;
+    cout << "     ------" << endl;
+    cout << "\nEnter the correct answer: ";
+    cin >> userNum;
+
+    if (userNum == numAnswer)
+    {
+        cout << "\nCongratulation!" << endl;
+    }
+    else
+    {
+        cout << "\nThe correct answer is: " << numAnswer << endl;
+    }
+    }
+    else
+    {
+    numAnswer = numTwo - numOne;
+    cout << "   !Math Tutor!" << endl;
+    cout << "\n      " << setw(5) << numTwo << endl;
+    cout << "     -"<< setw(5) << numOne << endl;
+    cout << "     ------" << endl;
+    cout << "\nEnter the correct answer: ";
+    cin >> userNum;
+
+    if (userNum == numAnswer)
+    {
+        cout << "\nCongratulation!" << endl;
+    }
+    else
+    {
+        cout << "\nThe correct answer is: " << numAnswer << endl;
+    }
+    }
+    cout<<"\nwould you like to run the project again? (Y/N): ";
+    cin>>Again;
+    Again = toupper(Again);
+}while (Again != 'N');
+}
+
+
+
+void FileProccessing()
+{
+    ifstream infile;
+    int number, totNum=0, numCount=0;
+    double avg = 0.0;
+    char Again = 'Y';
+do
+{
+    system("CLS");
+    infile.open("random.txt");
+cout<< endl << endl;
+cout<< "Using Files--Numeric Processing" << endl;
+cout<< "----------------------------------------" << endl;
+    if (infile)
+    {
+        while (infile >> number)
+        {
+            cout<<number<<endl;
+            totNum += number;
+            numCount += 1;
+        }
+        infile.close();
+    }
+    else
+        cout<<"TXT file opening error.";
+
+
+    if (numCount >0)
+    {
+        avg = (1.0*totNum)/numCount;
+        cout<< "----------------------------------------" << endl;
+        cout<< "The number of numbers: " << numCount << endl;
+        cout<< "The sum of all the numbers: " << totNum<< endl;
+        cout<< "The avrage of all the numbers: " << avg << endl;
+        cout<< "----------------------------------------" << endl;
+    }
+    cout<<"\nwould you like to run the project again? (Y/N): ";
+    cin>>Again;
+    Again=toupper(Again);
+}while (Again != 'N');
+
+}
+
+
+
+void TEST()
+{
+    const int SIZE = 4;
+    const int Student = 5;
+    const int Grade = 5;
+    char LetterGrades[Grade] = {'A', 'B', 'C', 'D', 'F'};
+    string StudentsName[Student];
+    double Student1[SIZE];
+    double Student2[SIZE];
+    double Student3[SIZE];
+    double Student4[SIZE];
+    double Student5[SIZE];
+    int a;
+    char Again = 'y';
+
+    do
+    {
+        system("CLS");
+    Test_Grades(StudentsName, Student, Student1, SIZE, Student2, SIZE, Student3, SIZE, Student4, SIZE, Student5, SIZE);
+
+    for (a = 0; a < Student; a++)
+        {
+            cout<<endl<<"\n "<<StudentsName[a]<<"'s";
+        if (a == 0)
+            Student_Grade( Student1, SIZE, LetterGrades, Grade);
+        if (a == 1)
+            Student_Grade( Student2, SIZE, LetterGrades, Grade);
+        if (a == 2)
+            Student_Grade( Student3, SIZE, LetterGrades, Grade);
+        if (a == 3)
+            Student_Grade( Student4, SIZE, LetterGrades, Grade);
+        if (a == 4)
+            Student_Grade( Student5, SIZE, LetterGrades, Grade);
+
+        }
+    cout<<"\nwould you like to run the project again? (Y/N): ";
+    cin>>Again;
+    Again=toupper(Again);
+}while (Again != 'N');
+};
+
+void Test_Grades( string Names[], int SIZE0, double Grades1[], int SIZE1, double Grades2[], int SIZE2, double Grades3[], int SIZE3, double Grades4[], int SIZE4, double Grades5[], int SIZE5)
+{
+    int x, y;
+
+    for (x = 0; x < SIZE0; x++)
+        {
+            cout<<"\n Enter student "<<x+1<<"'s name: ";
+            cin >> Names[x];
+        if (x == 0)
+            {
+                for (y = 0; y < SIZE1; y++)
+                {
+                    do
+                    {
+                    cout<<"Enter "<<Names[x]<<"'s Test Grade "<<y+1<< ": ";
+                    cin >> Grades1[y];
+                    }while(Grades1[y] < 0 || Grades1[y] > 100);
+                }
+            }
+        if (x == 1)
+            {
+                for (y = 0; y < SIZE1; y++)
+                {
+                    do
+                    {
+                    cout<<"Enter "<<Names[x]<<"'s Test Grade "<<y+1<< ": ";
+                    cin >> Grades2[y];
+                    }while(Grades2[y] < 0 || Grades2[y] > 100);
+                }
+            }
+        if (x == 2)
+            {
+                for (y = 0; y < SIZE1; y++)
+                {
+                    do
+                    {
+                    cout<<"Enter "<<Names[x]<<"'s Test Grade "<<y+1<< ": ";
+                    cin >> Grades3[y];
+                    }while(Grades3[y] < 0 || Grades3[y] > 100);
+                }
+            }
+        if (x == 3)
+            {
+                for (y = 0; y < SIZE1; y++)
+                {
+                    do
+                    {
+                    cout<<"Enter "<<Names[x]<<"'s Test Grade "<<y+1<< ": ";
+                    cin >> Grades4[y];
+                    }while(Grades4[y] < 0 || Grades4[y] > 100);
+                }
+            }
+        if (x == 4)
+            {
+                for (y = 0; y < SIZE1; y++)
+                {
+                    do
+                    {
+                    cout<<"Enter "<<Names[x]<<"'s Test Grade "<<y+1<< ": ";
+                    cin >> Grades5[y];
+                    }while(Grades5[y] < 0 || Grades5[y] > 100);
+                }
+            }
+        }
+
+}
+
+void Student_Grade( double Student[], int SIZE, char LetterGrades[], int Q)
+{
+     int b;
+     double avgHold, stAvg;
+
+                for (b = 0; b < SIZE; b++)
+                {
+                avgHold += Student[b];
+                }
+
+                stAvg = avgHold / (1.0*b);
+
+                if (stAvg >=90 && stAvg <=100)
+                    {cout<<"\nAvg Test Score: "<<stAvg<<"\nLetter Grade: "<<LetterGrades[0];}
+                if (stAvg >=80 && stAvg <=89)
+                    {cout<<"\nAvg Test Score: "<<stAvg<<"\nLetter Grade: "<<LetterGrades[1];}
+                if (stAvg >=70 && stAvg <=79)
+                    {cout<<"\nAvg Test Score: "<<stAvg<<"\nLetter Grade: "<<LetterGrades[2];}
+                if (stAvg >=60 && stAvg <=69)
+                    {cout<<"\nAvg Test Score: "<<stAvg<<"\nLetter Grade: "<<LetterGrades[3];}
+                if (stAvg < 59)
+                    {cout<<"\nAvg Test Score: "<<stAvg<<"\nLetter Grade: "<<LetterGrades[4];}
+}
+
+
+
+void EmployeeClass()
+{
+    string Holder;
+    int Holder2;
+    char Again = 'Y';
+
+do
+{
+    system("CLS");
+    Employee item1 ("Susan Meyers", 47899, "Accounting", "Vice President");
+
+    Employee item2 ("Mark Jones", 39119); // ("IT" ,"Programmer") i made this so that i could use the Employee(string A, int B) Function
+
+    Employee item3; // ("Joy Rogers", 81774, "Manufacturing", "Engineer") i made this so that i could use the Employee() Function
+
+
+    cout<<endl<<endl<<"======================================================================";
+    cout<<endl<<setw(20)<<left<<"Name"<<setw(15)<<left<<"ID Number"<<setw(20)<<left<<"Department"<<left<<setw(20)<<left<<"Position";
+    cout<<endl<<"______________________________________________________________________"<<endl;
+    cout<<setw(20)<<left<<item1.getName()<<setw(15)<<left<<item1.getIdNum()<<setw(20)<<left<<item1.getDep()<<setw(20)<<left<<item1.getPos()<<endl;
+    cout<<setw(20)<<left<<item2.getName()<<setw(15)<<left<<item2.getIdNum()<<setw(20)<<left<<item2.getDep()<<setw(20)<<left<<item2.getPos()<<endl;
+    cout<<setw(20)<<left<<item3.getName()<<setw(15)<<left<<item3.getIdNum()<<setw(20)<<left<<item3.getDep()<<setw(20)<<left<<item3.getPos()<<endl;
+
+    cout<<endl<<"======================================================================"<<endl;
+
+    cout<<endl<<"Enter "<<item2.getName()<<"'s Department (IT): ";
+    cin>>Holder;
+    item2.setDep(Holder);
+    cout<<endl<<"Enter "<<item2.getName()<<"'s Position (Programmer): ";
+    cin>>Holder;
+    item2.setPos(Holder);
+
+
+
+
+    system("CLS");
+    cout<<endl<<endl<<"======================================================================";
+    cout<<endl<<setw(20)<<left<<"Name"<<setw(15)<<left<<"ID Number"<<setw(20)<<left<<"Department"<<left<<setw(20)<<left<<"Position";
+    cout<<endl<<"______________________________________________________________________"<<endl;
+    cout<<setw(20)<<left<<item1.getName()<<setw(15)<<left<<item1.getIdNum()<<setw(20)<<left<<item1.getDep()<<setw(20)<<left<<item1.getPos()<<endl;
+    cout<<setw(20)<<left<<item2.getName()<<setw(15)<<left<<item2.getIdNum()<<setw(20)<<left<<item2.getDep()<<setw(20)<<left<<item2.getPos()<<endl;
+    cout<<setw(20)<<left<<item3.getName()<<setw(15)<<left<<item3.getIdNum()<<setw(20)<<left<<item3.getDep()<<setw(20)<<left<<item3.getPos()<<endl;
+
+    cout<<endl<<"======================================================================"<<endl;
+
+    cin.ignore();
+    cout<<endl<<"Enter Employee's Name (Joy Rogers): ";
+    getline(cin, Holder);
+    item3.setName(Holder);
+    cout<<endl<<"Enter Employee's ID Number (81774): ";
+    cin>>Holder2;
+    item3.setIdNum(Holder2);
+    cout<<endl<<"Enter "<<item3.getName()<<"'s Department (Manufacturing): ";
+    cin>>Holder;
+    item3.setDep(Holder);
+    cout<<endl<<"Enter "<<item3.getName()<<"'s Position (Engineer): ";
+    cin>>Holder;
+    item3.setPos(Holder);
+
+
+
+
+
+    system("CLS");
+    cout<<endl<<endl<<"======================================================================";
+    cout<<endl<<setw(20)<<left<<"Name"<<setw(15)<<left<<"ID Number"<<setw(20)<<left<<"Department"<<left<<setw(20)<<left<<"Position";
+    cout<<endl<<"______________________________________________________________________"<<endl;
+    cout<<setw(20)<<left<<item1.getName()<<setw(15)<<left<<item1.getIdNum()<<setw(20)<<left<<item1.getDep()<<setw(20)<<left<<item1.getPos()<<endl;
+    cout<<setw(20)<<left<<item2.getName()<<setw(15)<<left<<item2.getIdNum()<<setw(20)<<left<<item2.getDep()<<setw(20)<<left<<item2.getPos()<<endl;
+    cout<<setw(20)<<left<<item3.getName()<<setw(15)<<left<<item3.getIdNum()<<setw(20)<<left<<item3.getDep()<<setw(20)<<left<<item3.getPos()<<endl;
+
+    cout<<endl<<"======================================================================"<<endl;
+
+    cout<<"\nwould you like to run the project again? (Y/N): ";
+    cin>>Again;
+    Again = toupper(Again);
+}while (Again != 'N');
+
+}
